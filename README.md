@@ -44,3 +44,8 @@ This application allows the user to explore a 2D map to search for the correct l
     - All coordinates that appear as arguments to the methods of this Graphics object are considered relative to the translation origin of this Graphics object prior to the invocation of the method.
 
     - All rendering operations modify only pixels which lie within the area bounded by the current clip, which is specified by a Shape in user space and is controlled by the program using the Graphics object. This user clip is transformed into device space and combined with the device clip, which is defined by the visibility of windows and device extents. The combination of the user clip and device clip defines the composite clip, which determines the final clipping region. The user clip cannot be modified by the rendering system to reflect the resulting composite clip. The user clip can only be changed through the setClip or clipRect methods. All drawing or writing is done in the current color, using the current paint mode, and in the current font.
+
+- **FileIO (Scanner)**
+    - The Scanner class is used to get user input, and it is found in the java.util package.
+
+    - The Scanner class is implemented here to get a random word from a given word list called dictionary.txt. Changing this file will change the possible words that can be the objective of the game.
