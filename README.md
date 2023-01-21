@@ -21,5 +21,6 @@ This application allows the user to explore a 2D map to search for the correct l
   - Intuitive user interface/navigation
   - Clean retro theme (visual graphics/sound)
   - User friendly controls
+  
     **WASD or Arrow Keys to move**
      **ESC to pause**
