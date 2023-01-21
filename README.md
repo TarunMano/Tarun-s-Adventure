@@ -6,10 +6,10 @@ Word Adventure is our [FBLA (Future Business Leaders of America)](https://www.fb
   • The game should be an executable game, either through the Internet or
   through a local installation (review guidelines about Internet access at the
   National Leadership Conference).  
-#^  • The game should contain a scoreboard.  
-#^  • The game should contain a leaderboard and celebratory messages.  
-#^  • The game should have a minimum of three levels.  
-#^  • The game should have an instructional display.  
+  • The game should contain a scoreboard.  
+  • The game should contain a leaderboard and celebratory messages.  
+  • The game should have a minimum of three levels.  
+  • The game should have an instructional display.  
 
 2D based Java game 
   - Collect keys
