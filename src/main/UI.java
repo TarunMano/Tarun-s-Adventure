@@ -14,6 +14,8 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public boolean gameFinished = false;
+	public int numCommand = 0;
+	public int titleState = 0; //0 = title, 1 = instructions, 2 = level difficulty
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -34,7 +36,12 @@ public class UI {
 		
 		g2.setFont(pressStart_30);
 		g2.setColor(Color.white);
+		//Title
+		if(gp.gameState == gp.titleState) {
+			drawTitleScreen();
+		}
 		
+		//play
 		if(gp.gameState == gp.playState && gameFinished == false) {
 			
 			playTime +=(double)1/60;
@@ -42,6 +49,7 @@ public class UI {
 			
 			
 		}
+		//Paused
 		if(gp.gameState == gp.pauseState) {
 			drawPauseScreen();
 			
@@ -86,24 +94,172 @@ public class UI {
 			g2.setFont(pressStart_30);
 			g2.setColor(Color.white);
 			
-			g2.drawString(gp.player.area + "-" + gp.player.level, 50, 50);
+//			g2.drawString(gp.player.area + "-" + gp.player.level, 50, 50);			
 			
 			//time
 		
 			
 			if(messageOn == true) {
 				
-				g2.setFont(g2.getFont().deriveFont(20F));
-				g2.drawString(message, gp.tileSize/2, gp.tileSize * 5);
+				g2.setFont(g2.getFont().deriveFont(60F));
+				g2.drawString(message, getCenterX(gp.word),gp.screenLength/2);
 				
 				messageCounter++;
 				
-				if(messageCounter > 100) {
+				if(messageCounter > 75) {
 					messageCounter = 0;
 					messageOn = false;
 				}
 			}
 		}
+		
+	}
+	public void drawTitleScreen() {
+		
+		if(titleState == 0) {
+			g2.setColor(new Color(65,85,150));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenLength);
+			//name
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+			String text = "Word Adventure";
+			int x = getCenterX(text);
+			int y = gp.tileSize*3;
+			g2.setColor(Color.black);
+			g2.drawString(text, x+4, y+4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+			//menu
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,25F));
+			
+			text = "START GAME";
+			 x = getCenterX(text);
+			 y += gp.tileSize*3;
+			g2.drawString(text, x, y);
+			if(numCommand == 0) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
+			text = "Instructions";
+			 x = getCenterX(text);
+			 y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(numCommand == 1) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
+			text = "Exit";
+			 x = getCenterX(text);
+			 y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(numCommand == 2) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "Tarun Manoharan & Aditya Naidu";
+			 x = getCenterX(text);
+			 y += gp.tileSize*3;
+			g2.drawString(text, x, y);
+
+		}
+		else if(titleState == 2) {
+			g2.setColor(new Color(65,85,150));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenLength);
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+			String text = "Choose your difficulty!";
+			int x = getCenterX(text);
+			int y = gp.tileSize*3;
+			g2.setColor(Color.black);
+			g2.drawString(text, x+4, y+4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+			//levels
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,25F));
+			
+			g2.setColor(Color.green);
+			text = "Easy";
+			 x = getCenterX(text);
+			 y += gp.tileSize*3;
+			g2.drawString(text, x, y);
+			if(numCommand == 0) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			g2.setColor(Color.yellow);
+			text = "Medium";
+			 x = getCenterX(text);
+			 y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(numCommand == 1) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			g2.setColor(Color.red);
+			text = "Hard";
+			 x = getCenterX(text);
+			 y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(numCommand == 2) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			g2.setColor(Color.white);
+			text = "Back";
+			 x = getCenterX(text);
+			 y += gp.tileSize*2;
+			g2.drawString(text, x, y);
+			if(numCommand == 3) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+		
+			
+			
+		}
+		else if(titleState == 1) {
+			g2.setColor(new Color(65,85,150));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenLength);
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+			String text = "Instructions";
+			int x = getCenterX(text);
+			int y = gp.tileSize;
+			g2.setColor(Color.black);
+			g2.drawString(text, x+4, y+4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+			g2.setFont(g2.getFont().deriveFont(10F));
+			text = "Use W,A,S,D to move around the map and find the letters ";
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			text = "to build the given word!";
+			x = getCenterX(text);
+			y+= gp.tileSize;
+			g2.drawString(text, x, y);
+			text = "The word is flashed in the beginning, so be sure to remember its spelling.";
+			x = getCenterX(text);
+			y+= gp.tileSize;
+			g2.drawString(text, x, y);
+			text = "If you pick up the wrong letter, the game is over.";
+			x = getCenterX(text);
+			y+= gp.tileSize;
+			g2.drawString(text, x, y);
+			text = "Explore the expansive map, but be quick—the timer is counting down!";
+			x = getCenterX(text);
+			y+= gp.tileSize;
+			g2.drawString(text, x, y);
+			
+			g2.setColor(Color.yellow);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "Click Enter to go Back!";
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			
+			
+		}
+		
 		
 	}
 	public void drawPauseScreen() {

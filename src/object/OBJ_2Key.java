@@ -13,7 +13,7 @@ public class OBJ_2Key extends SuperObject{
 		name = "2nd Key";
 		
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/Key2.png.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/Alphabet png/A.png"));
 			uTool.scaleImage(image, gp.tileSize, gp.tileSize);
 		}catch(IOException e) {
 			e.printStackTrace();

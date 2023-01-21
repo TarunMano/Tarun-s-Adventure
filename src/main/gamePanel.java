@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.JPanel;
 
@@ -40,6 +43,7 @@ public class gamePanel extends JPanel implements Runnable{
     public collisionChecker cChecker = new collisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public wordGenerator wGen = new wordGenerator(this);
     Thread gameThread;
     
     public Player player = new Player(this,keyH);
@@ -50,9 +54,15 @@ public class gamePanel extends JPanel implements Runnable{
     //gamesTATE
     public int gameState;
     public final int playState = 1;
+    public final int titleState = 0;
     public final int pauseState = 2;
     public int pauseCount = 0;
     public int resumeCount = 1;
+    
+    // Word 
+    public String word;
+    public char[] wordSet = new char[5];
+    public String cL1, cL2, cL3, cL4, cL5;
     
     
     //set player default position.
@@ -66,13 +76,15 @@ public class gamePanel extends JPanel implements Runnable{
       this.setFocusable(true);
     }
     
-    public void setupGame() {
+    public void setupGame() throws FileNotFoundException {
     	
+    	word = getWord();
+    	wGen.wordSetter(word.toCharArray());
+    	wGen.wordToImage();
     	aSetter.setObject();
-    	aSetter.setNPC();
-    	playMusic(0);
-    	stopMusic();
-    	gameState = playState;
+    	playMusic(6);
+    	gameState = titleState;
+    	
     	
     }
 
@@ -128,6 +140,7 @@ public class gamePanel extends JPanel implements Runnable{
 	    			resumeCount += 1;
 	    		}
     		}
+    		
     	}
     	if(gameState == pauseState) {
     		//pause state stuff
@@ -144,31 +157,39 @@ public class gamePanel extends JPanel implements Runnable{
       if(keyH.checkDrawTime == true) {
       drawStart = System.nanoTime();
       }
-      tileM.draw(g2);
-      //object
-      for(int i = 0; i < obj.length; i++) {
-    	  if(obj[i] != null) {
-    		  obj[i].draw(g2, this);
-    	  }
-      }
-      //npc
-      for(int i = 0;i < npc.length;i++) {
-    	  if(npc[i] != null) {
-    		  npc[i].draw(g2);
-    	  }
-      }
-      //player
-      player.draw(g2);
       
-      ui.draw(g2);
-      if(keyH.checkDrawTime == true) {
-      long drawEnd = System.nanoTime();
-      long passed = drawEnd - drawStart;
-      g2.setColor(Color.white);
-      g2.drawString("Draw time: " + passed, 10, 400);
-      System.out.println("Draw Time: " + passed);
+      //title Screen
+      if(gameState == titleState) {
+    	  ui.draw(g2);
       }
-      g2.dispose();
+      else {
+    	  tileM.draw(g2);
+          //object
+          for(int i = 0; i < obj.length; i++) {
+        	  if(obj[i] != null) {
+        		  obj[i].draw(g2, this);
+        	  }
+          }
+          //npc
+          for(int i = 0;i < npc.length;i++) {
+        	  if(npc[i] != null) {
+        		  npc[i].draw(g2);
+        	  }
+          }
+          //player
+          player.draw(g2);
+          
+          ui.draw(g2);
+          if(keyH.checkDrawTime == true) {
+          long drawEnd = System.nanoTime();
+          long passed = drawEnd - drawStart;
+          g2.setColor(Color.white);
+          g2.drawString("Draw time: " + passed, 10, 400);
+          System.out.println("Draw Time: " + passed);
+          }
+          g2.dispose();
+      }
+      
     }
     public void playMusic(int i) {
     	music.setFile(i);
@@ -190,6 +211,17 @@ public class gamePanel extends JPanel implements Runnable{
     	else {
     		music.pause();
     	}
+    }
+    public String getWord() throws FileNotFoundException {
+    	Scanner scan = new Scanner(new File("dictionary.txt"));
+    	int lines = scan.nextInt();
+    	int chosenLine = (int)(Math.random()*lines)+1;
+    	System.out.println(chosenLine);
+    	for(int i = 0; i< chosenLine; i++) {
+    		scan.nextLine();
+    	}
+    	
+    	return scan.nextLine();
     }
     
 }

@@ -21,6 +21,8 @@ public class Sound {
 		soundUrl[3] = getClass().getResource("/sound/mastKey.wav");
 		soundUrl[4] = getClass().getResource("/sound/finaldoor.wav");
 		soundUrl[5] = getClass().getResource("/sound/armor.wav");
+		soundUrl[6] = getClass().getResource("/sound/Title.wav");
+		soundUrl[7] = getClass().getResource("/sound/menuTick.wav");
 	}
 	
 	

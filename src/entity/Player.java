@@ -19,8 +19,8 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
-	public int hasKey2 = 1;
-	int hasKey3 = 1;
+	public int hasKey2 = 0;
+	int hasKey3 = 0;
 	int hasKey5 = 1;
 	int hasKeyF = 1;
 	int hasBoot = 0;
@@ -102,8 +102,8 @@ public class Player extends Entity{
 			pickUpObject(objIndex);
 			
 			//npc collision
-			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-			interactNPC(npcIndex);
+		
+		
 			
 			//if collision is false player doesn't move
 			if(collisionOn == false) {
@@ -153,62 +153,48 @@ public class Player extends Entity{
 				gp.playSE(1);
 				hasKey2++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("You found a key!");
 				break;
 			case "2nd Door":
 				gp.playSE(2);
 				if(hasKey2 > 0) { 
 					gp.obj[i] = null;
 					hasKey2--;
-					gp.ui.showMessage("The door has been opened!");
 				}
-				else {
-					gp.ui.showMessage("You need a key!");
-				}
+				
 				break;
 			case "3rd Key":
 				gp.playSE(1);
 				hasKey3++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("You found a key!");
 				break;
 			case "3rd Door":
 				gp.playSE(2);
 				if(hasKey3 > 0) { 
 					gp.obj[i] = null;
-					hasKey3--;gp.ui.showMessage("The door has been opened!");
+					hasKey3--;
+				
 				}
-				else if(hasKey3 < 1 && (hasKey2 > 0)) {
-					gp.ui.showMessage("The key doesn't fit!");
-				}
-				else {
-					gp.ui.showMessage("You need a key!");
-				}
+				
 				break;
 			case "5th Key":
 				gp.playSE(1);
 				hasKey5++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("You found a key!");
+				
 				break;
 			case "5th Door":
 				gp.playSE(2);
 				if(hasKey5 > 0) { 
 					gp.obj[i] = null;
-					hasKey5--;gp.ui.showMessage("The door has been opened!");
+					hasKey5--;
+					
 				}
-				else if(hasKey5 < 1 && (hasKey2 > 0||hasKey3 > 0)) {
-					gp.ui.showMessage("The key doesn't fit!");
-				}
-				else {
-					gp.ui.showMessage("You need a key!");
-				}
+				
 				break;
 			case "Master Key":
 				gp.playSE(3);
 				hasKeyF++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("A chill crawls down your spine.");
 				break;
 			case "Dungeon Door":
 				if(hasKeyF > 0) { 
@@ -224,11 +210,11 @@ public class Player extends Entity{
 				}
 				else if(hasKeyF < 1 && (hasKey2 > 0||hasKey3 > 0||hasKey5 > 0)) {
 					gp.playSE(2);
-					gp.ui.showMessage("The key doesn't fit!");
+					
 				}
 				else {
 					gp.playSE(2);
-					gp.ui.showMessage("You need a key!");
+				
 				}
 				
 				break;
@@ -345,24 +331,9 @@ public class Player extends Entity{
 			
 		}
 	}
-	public void interactNPC(int i) {
-		
-		if(i != 999) {
-			System.out.println("you are hitting npc");
-		}
-	}
 	
-//	public void areaChange(int i) {
-//		if(i != 999) {
-//			int index   = gp.obj[i];
-//			
-//			switch(index) {
-//			case 1:
-//			
-//				break;
-//			}
-//		}
-//	}
+	
+
 	
 	
 	

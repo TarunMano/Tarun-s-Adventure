@@ -1,12 +1,14 @@
 //Tarun Manoharan
 package main;
 
+import java.io.FileNotFoundException;
+
 import javax.swing.JFrame;
 
 class Main {
 
 
-	  public static void main(String[]args) {
+	  public static void main(String[]args) throws FileNotFoundException {
 	    
 
 	    JFrame window = new JFrame();
