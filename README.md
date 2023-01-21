@@ -11,13 +11,18 @@ Word Adventure is our [FBLA (Future Business Leaders of America)](https://www.fb
   • The game should have a minimum of three levels.  
   • The game should have an instructional display.  
 
-2D based Java game 
-  - Collect keys
-  - Fight Monsters
-  - Level up 
+This application allows the user to explore a 2D map to search for the correct letters to a given word.
+
+### **FEATURES**
+2D based Java game
+  - Collect letters
+  - Try to beat speed records
+  - Tutorial when starting game
+  - Intuitive user interface/navigation
+  - Clean retro theme (visual graphics/sound)
+  - User friendly controls
   
-  WASD or Arrow Keys to move
   
-  ESC to pause
+ ** WASD or Arrow Keys to move **
   
-  T for draw time 
+ **ESC to pause **
