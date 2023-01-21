@@ -15,7 +15,7 @@ class Main {
 	    JFrame window = new JFrame();
 	    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    window.setResizable(false);
-	    window.setTitle("2D Game");
+	    window.setTitle("Word Adventure - FBLA 2023");
 
 	    gamePanel GamePanel = new gamePanel();
 	    window.add(GamePanel);

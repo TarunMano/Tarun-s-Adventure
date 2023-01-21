@@ -323,21 +323,21 @@ public class UI {
 			
 			g2.setColor(Color.white);
 			g2.setFont(g2.getFont().deriveFont(15F));
-			text = "1. " + gp.leader1;
+			text = "1. " + gp.leader1 + " sec.";
 			x = getCenterX(text);
 			y+= gp.tileSize*2;
 			g2.drawString(text, x, y);
 			
 			g2.setColor(Color.white);
 			g2.setFont(g2.getFont().deriveFont(15F));
-			text = "2. " + gp.leader2;
+			text = "2. " + gp.leader2 + " sec.";
 			x = getCenterX(text);
 			y+= gp.tileSize*2;
 			g2.drawString(text, x, y);
 			
 			g2.setColor(Color.white);
 			g2.setFont(g2.getFont().deriveFont(15F));
-			text = "3. " + gp.leader3;
+			text = "3. " + gp.leader3 + " sec.";
 			x = getCenterX(text);
 			y+= gp.tileSize*2;
 			g2.drawString(text, x, y);
