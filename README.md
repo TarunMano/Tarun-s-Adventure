@@ -23,4 +23,5 @@ This application allows the user to explore a 2D map to search for the correct l
   - User friendly controls
   
     **WASD or Arrow Keys to move**
+    
      **ESC to pause**
