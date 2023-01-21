@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
@@ -32,7 +33,7 @@ public class UI {
 		message = text;
 		messageOn = true;
 	}
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2) throws IOException {
 		
 		this.g2 = g2;
 		
@@ -93,7 +94,7 @@ public class UI {
 		    y = gp.screenLength/2 - (gp.tileSize);
 			g2.drawString(text, x, y);
 			
-			gp.gameThread = null;
+		
 		}
 		else if(gameFinishedFail == true) {
 			g2.setFont(pressStart_30);
@@ -104,7 +105,7 @@ public class UI {
 			int x;
 			int y;
 			
-			text = "Dissapointing...";
+			text = "Disappointing...";
 			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 			x = gp.screenWidth/2 - textLength/2;
 		    y = gp.screenLength/2 - (gp.tileSize*3);
@@ -126,7 +127,7 @@ public class UI {
 		    y = gp.screenLength/2 - (gp.tileSize);
 			g2.drawString(text, x, y);
 			
-			gp.gameThread = null;
+			
 		}
 		else {
 			if(gp.gameState == gp.playState) {
@@ -153,7 +154,7 @@ public class UI {
 		}
 		
 	}
-	public void drawTitleScreen() {
+	public void drawTitleScreen() throws IOException {
 		
 		if(titleState == 0) {
 			g2.setColor(new Color(65,85,150));
@@ -306,6 +307,8 @@ public class UI {
 			
 		}
 		else if(titleState == 3) {
+		
+			
 			g2.setColor(new Color(65,85,150));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenLength);
 			g2.setColor(Color.white);

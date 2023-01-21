@@ -2,13 +2,14 @@
 package main;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 class Main {
 
 
-	  public static void main(String[]args) throws FileNotFoundException {
+	  public static void main(String[]args) throws IOException {
 	    
 
 	    JFrame window = new JFrame();

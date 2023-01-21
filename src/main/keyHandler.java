@@ -157,16 +157,10 @@ public class keyHandler implements KeyListener{
 	 	        
 	 	      }
 	      }
+	      
 	   
-	      //debug
-	      if(code == KeyEvent.VK_T) {
-	    	   if(checkDrawTime == false) {
-	    		   checkDrawTime = true;
-	    	   }
-	    	   else if(checkDrawTime == true) {
-	    		   checkDrawTime = false;
-	    	   }
-	      }
+	      
+	      
 	  } 
 	  public void keyReleased(KeyEvent e){
 		  

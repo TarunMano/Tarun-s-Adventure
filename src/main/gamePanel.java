@@ -34,6 +34,7 @@ public class gamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; //768 pixels
     public final int screenLength = tileSize * maxScreenRow; //576 pixels
     
+    public boolean updateLeader = false;
     
     //world settings
     
@@ -89,7 +90,7 @@ public class gamePanel extends JPanel implements Runnable{
       this.setFocusable(true);
     }
     
-    public void setupGame() throws FileNotFoundException {
+    public void setupGame() throws IOException {
     	
     	word = getWord();
     	wGen.wordSetter(word.toCharArray());
@@ -98,7 +99,8 @@ public class gamePanel extends JPanel implements Runnable{
     	playMusic(6);
     	gameState = titleState;
     	
-    	
+		sortFile();
+		display();
     	
     }
 
@@ -147,13 +149,21 @@ public class gamePanel extends JPanel implements Runnable{
     	if(gameState == playState) {
     		//player
     		player.update();
-    	
+    		
     		if(gameEnd == 5) {
+    			if(!updateLeader) {
+    				stopMusic();
+        			fileWriter();
+        			sortFile();
+            		display();
+            		updateLeader = true;
+    			}
+    			
 				ui.gameFinished = true;
-				stopMusic();
-				fileWriter();
-				sortFile();
-				display();
+				
+				
+				
+				
 			}
     		if(resumeCount % 2 == 0) {
 	    		if(pauseCount > 0 && pauseCount % 2 == 0) {
@@ -193,7 +203,12 @@ public class gamePanel extends JPanel implements Runnable{
       
       //title Screen
       if(gameState == titleState) {
-    	  ui.draw(g2);
+    	  try {
+			ui.draw(g2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
       }
       else {
     	  tileM.draw(g2);
@@ -208,7 +223,12 @@ public class gamePanel extends JPanel implements Runnable{
           //player
           player.draw(g2);
           
-          ui.draw(g2);
+          try {
+			ui.draw(g2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
           if(keyH.checkDrawTime == true) {
           long drawEnd = System.nanoTime();
           long passed = drawEnd - drawStart;
@@ -256,7 +276,9 @@ public class gamePanel extends JPanel implements Runnable{
     public void fileWriter() throws IOException {
     	FileWriter boardWrite = new FileWriter(board, true);
     	String time = dFormat.format(ui.playTime);
+   
     	boardWrite.write(time);
+    	boardWrite.write("\n");
     	boardWrite.close();
     }
     public void sortFile() throws IOException {
@@ -287,8 +309,8 @@ public class gamePanel extends JPanel implements Runnable{
             writer.close();
         }
     }
-    public void display() {
-    	Scanner scan = new Scanner("LeaderSort.txt");
+    public void display() throws FileNotFoundException {
+    	Scanner scan = new Scanner(new File("LeaderSort.txt"));
     	leader1 = scan.nextLine();
     	leader2 = scan.nextLine();
     	leader3 = scan.nextLine();
