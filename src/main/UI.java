@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 public class UI {
 	
@@ -14,6 +15,7 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public boolean gameFinished = false;
+	public boolean gameFinishedFail = false;
 	public int numCommand = 0;
 	public int titleState = 0; //0 = title, 1 = instructions, 2 = level difficulty
 	
@@ -45,7 +47,10 @@ public class UI {
 		if(gp.gameState == gp.playState && gameFinished == false) {
 			
 			playTime +=(double)1/60;
-			g2.drawString(dFormat.format(playTime),gp.tileSize*12,50); 
+			g2.drawString(dFormat.format(playTime),gp.tileSize*12,50);
+			
+				
+			
 			
 			
 		}
@@ -90,13 +95,47 @@ public class UI {
 			
 			gp.gameThread = null;
 		}
-		else {
+		else if(gameFinishedFail == true) {
+			g2.setFont(pressStart_30);
+			g2.setColor(Color.yellow);
+			
+			String text;
+			int textLength;
+			int x;
+			int y;
+			
+			text = "Dissapointing...";
+			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+			x = gp.screenWidth/2 - textLength/2;
+		    y = gp.screenLength/2 - (gp.tileSize*3);
+			g2.drawString(text, x, y);
+			
 			g2.setFont(pressStart_30);
 			g2.setColor(Color.white);
+			text = "Time: "+dFormat.format(playTime);
+			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+			x = gp.screenWidth/2 - textLength/2;
+		    y = gp.screenLength/2 + (gp.tileSize*3);
+			g2.drawString(text, x, y);
+			 
+			g2.setFont(pressStart_60B);
+			g2.setColor(Color.red);
+			text = "YOU FAILED";
+			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+			x = gp.screenWidth/2 - textLength/2;
+		    y = gp.screenLength/2 - (gp.tileSize);
+			g2.drawString(text, x, y);
 			
-//			g2.drawString(gp.player.area + "-" + gp.player.level, 50, 50);			
-			
-			//time
+			gp.gameThread = null;
+		}
+		else {
+			if(gp.gameState == gp.playState) {
+				g2.setFont(pressStart_30);
+				g2.setColor(Color.white);
+				String wrd = gp.showWord[0] + gp.showWord[1] + gp.showWord[2] + gp.showWord[3] + gp.showWord[4] ;
+				g2.drawString(wrd, 50, 50);	
+			}
+				
 		
 			
 			if(messageOn == true) {
@@ -131,7 +170,7 @@ public class UI {
 			
 			//menu
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD,25F));
-			
+
 			text = "START GAME";
 			 x = getCenterX(text);
 			 y += gp.tileSize*3;
@@ -147,8 +186,7 @@ public class UI {
 			if(numCommand == 1) {
 				g2.drawString(">", x-gp.tileSize, y);
 			}
-			
-			text = "Exit";
+			text = "Leaderboard";
 			 x = getCenterX(text);
 			 y += gp.tileSize;
 			g2.drawString(text, x, y);
@@ -156,10 +194,18 @@ public class UI {
 				g2.drawString(">", x-gp.tileSize, y);
 			}
 			
+			text = "Exit";
+			 x = getCenterX(text);
+			 y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(numCommand == 3) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
 			g2.setFont(g2.getFont().deriveFont(15F));
 			text = "Tarun Manoharan & Aditya Naidu";
 			 x = getCenterX(text);
-			 y += gp.tileSize*3;
+			 y += gp.tileSize*2;
 			g2.drawString(text, x, y);
 
 		}
@@ -259,6 +305,49 @@ public class UI {
 			
 			
 		}
+		else if(titleState == 3) {
+			g2.setColor(new Color(65,85,150));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenLength);
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+			String text = "Leaderboard";
+			int x = getCenterX(text);
+			int y = gp.tileSize;
+			g2.setColor(Color.black);
+			g2.drawString(text, x+4, y+4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "1. " + gp.leader1;
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "2. " + gp.leader2;
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			
+			g2.setColor(Color.white);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "3. " + gp.leader3;
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			
+			g2.setColor(Color.yellow);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			text = "Click Enter to go Back!";
+			x = getCenterX(text);
+			y+= gp.tileSize*2;
+			g2.drawString(text, x, y);
+			
+			
+		}
 		
 		
 	}
@@ -272,6 +361,12 @@ public class UI {
 		g2.drawString(text, x, y);
 		g2.drawString(dFormat.format(playTime),gp.tileSize*12,50); 
 		
+		g2.setFont(g2.getFont().deriveFont(15F));
+		 text = "ESC to quit|Enter to Resume";
+		 x = getCenterX(text);
+		 y += gp.tileSize*5;
+		
+		g2.drawString(text, x, y);
 		
 		
 		

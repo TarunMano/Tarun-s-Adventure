@@ -4,8 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.JPanel;
@@ -48,8 +56,7 @@ public class gamePanel extends JPanel implements Runnable{
     
     public Player player = new Player(this,keyH);
     public SuperObject obj[] = new SuperObject[30];
-    public Entity npc[] = new Entity[10];
-    
+    DecimalFormat dFormat = new DecimalFormat("#0.00");
     
     //gamesTATE
     public int gameState;
@@ -58,11 +65,17 @@ public class gamePanel extends JPanel implements Runnable{
     public final int pauseState = 2;
     public int pauseCount = 0;
     public int resumeCount = 1;
+    public int gameEnd = 0;
+    public int difficulty;
     
     // Word 
     public String word;
     public char[] wordSet = new char[5];
     public String cL1, cL2, cL3, cL4, cL5;
+    public String[] showWord = new String[] {"-","-","-","-","-"};
+    File board = new File("Leaderboard.txt");
+    String leader1, leader2, leader3;
+   
     
     
     //set player default position.
@@ -84,6 +97,7 @@ public class gamePanel extends JPanel implements Runnable{
     	aSetter.setObject();
     	playMusic(6);
     	gameState = titleState;
+    	
     	
     	
     }
@@ -109,7 +123,12 @@ public class gamePanel extends JPanel implements Runnable{
     		lastTime = currentTime;
     		
     		if(delta >= 1 ) {
-    			update();
+    			try {
+					update();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     			repaint();
     			delta--;
     			drawCount++;
@@ -123,22 +142,36 @@ public class gamePanel extends JPanel implements Runnable{
     	}
     }
     
-    public void update() {
+    public void update() throws IOException {
     	
     	if(gameState == playState) {
     		//player
     		player.update();
-    		//npc
-    		for(int i = 0; i < npc.length; i++) {
-    			if(npc[i] != null) {
-    				npc[i].update();
-    			}
-    		}
+    	
+    		if(gameEnd == 5) {
+				ui.gameFinished = true;
+				stopMusic();
+				fileWriter();
+				sortFile();
+				display();
+			}
     		if(resumeCount % 2 == 0) {
 	    		if(pauseCount > 0 && pauseCount % 2 == 0) {
 	    			music.resume();
 	    			resumeCount += 1;
 	    		}
+    		}
+    		if(difficulty == 0 && ui.playTime > 300.00) {
+    			ui.gameFinishedFail = true;
+    			
+    		}
+    		else if(difficulty == 1 && ui.playTime > 200.00) {
+    			ui.gameFinishedFail = true;
+    			
+    		}
+    		else if(difficulty == 2 && ui.playTime >= 100.00) {
+    			ui.gameFinishedFail = true;
+    		
     		}
     		
     	}
@@ -170,11 +203,7 @@ public class gamePanel extends JPanel implements Runnable{
         		  obj[i].draw(g2, this);
         	  }
           }
-          //npc
-          for(int i = 0;i < npc.length;i++) {
-        	  if(npc[i] != null) {
-        		  npc[i].draw(g2);
-        	  }
+          
           }
           //player
           player.draw(g2);
@@ -190,7 +219,7 @@ public class gamePanel extends JPanel implements Runnable{
           g2.dispose();
       }
       
-    }
+    
     public void playMusic(int i) {
     	music.setFile(i);
     	music.play();
@@ -222,6 +251,48 @@ public class gamePanel extends JPanel implements Runnable{
     	}
     	
     	return scan.nextLine();
+    }
+    
+    public void fileWriter() throws IOException {
+    	FileWriter boardWrite = new FileWriter(board, true);
+    	String time = dFormat.format(ui.playTime);
+    	boardWrite.write(time);
+    	boardWrite.close();
+    }
+    public void sortFile() throws IOException {
+    	BufferedReader read = new BufferedReader(new FileReader("Leaderboard.txt"));
+    	ArrayList<String> lines = new ArrayList<String>();
+    	String currentLine = read.readLine();
+
+    	while (currentLine != null)
+    	{
+    	       lines.add(currentLine);
+    	       currentLine = read.readLine();
+    	}
+    	Collections.sort(lines);
+    	BufferedWriter writer = new BufferedWriter(new FileWriter("LeaderSort.txt"));
+    	for (String line : lines)
+    	{
+    	       writer.write(line);
+
+    	       writer.newLine();
+    	}
+    	if (read != null)
+        {
+            read.close();
+        }
+
+        if(writer != null)
+        {
+            writer.close();
+        }
+    }
+    public void display() {
+    	Scanner scan = new Scanner("LeaderSort.txt");
+    	leader1 = scan.nextLine();
+    	leader2 = scan.nextLine();
+    	leader3 = scan.nextLine();
+    	scan.close();
     }
     
 }

@@ -23,7 +23,6 @@ public class wordGenerator {
 	}
 	public void wordToImage() {
 		gp.cL1 = String.valueOf(gp.wordSet[0]);
-		System.out.println("letter" + gp.cL1);
 		gp.cL2 = String.valueOf(gp.wordSet[1]);
 		gp.cL3 = String.valueOf(gp.wordSet[2]);
 		gp.cL4 = String.valueOf(gp.wordSet[3]);

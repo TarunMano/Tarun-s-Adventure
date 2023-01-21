@@ -19,16 +19,6 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
-	public int hasKey2 = 0;
-	int hasKey3 = 0;
-	int hasKey5 = 1;
-	int hasKeyF = 1;
-	int hasBoot = 0;
-	int hasArmor = 0;
-	int hasHood = 0;
-	int dunDoor = 1;
-	public int area = 1;
-	public int level = 1;
 	
 	
 	
@@ -57,7 +47,7 @@ public class Player extends Entity{
 		
 		worldX = gp.tileSize * 24 - (gp.tileSize/2);
 		worldY = gp.tileSize * 18 - (gp.tileSize/2);
-		speed = 6;
+		speed = 8;
 		direction = "down";
 	}
 	
@@ -149,188 +139,55 @@ public class Player extends Entity{
 			String objectName = gp.obj[i].name;
 			
 			switch(objectName) {
-			case "2nd Key":
+			case "cL1":
 				gp.playSE(1);
-				hasKey2++;
 				gp.obj[i] = null;
-				break;
-			case "2nd Door":
-				gp.playSE(2);
-				if(hasKey2 > 0) { 
-					gp.obj[i] = null;
-					hasKey2--;
-				}
+				gp.showWord[0] = gp.cL1;
+				gp.gameEnd++;
 				
 				break;
-			case "3rd Key":
+		
+			case "cL2":
 				gp.playSE(1);
-				hasKey3++;
 				gp.obj[i] = null;
-				break;
-			case "3rd Door":
-				gp.playSE(2);
-				if(hasKey3 > 0) { 
-					gp.obj[i] = null;
-					hasKey3--;
+				gp.showWord[1] = gp.cL2;
+				gp.gameEnd++;
 				
-				}
-				
-				break;
-			case "5th Key":
-				gp.playSE(1);
-				hasKey5++;
-				gp.obj[i] = null;
-				
-				break;
-			case "5th Door":
-				gp.playSE(2);
-				if(hasKey5 > 0) { 
-					gp.obj[i] = null;
-					hasKey5--;
-					
-				}
-				
-				break;
-			case "Master Key":
-				gp.playSE(3);
-				hasKeyF++;
-				gp.obj[i] = null;
-				break;
-			case "Dungeon Door":
-				if(hasKeyF > 0) { 
-					gp.ui.gameFinished = true;
-					gp.stopMusic();
-					gp.playSE(1);
-//					gp.playSE(4);
-//					gp.obj[i] = null;
-//					hasKeyF--;
-//					dunDoor--;
-//					speed = 0;
-//					gp.ui.showMessage("Welcome to your doom.");
-				}
-				else if(hasKeyF < 1 && (hasKey2 > 0||hasKey3 > 0||hasKey5 > 0)) {
-					gp.playSE(2);
-					
-				}
-				else {
-					gp.playSE(2);
-				
-				}
-				
-				break;
-			case "Night Boots":
-				gp.playSE(5);
-				gp.obj[i] = null;
-				hasBoot = 1;
-				if(hasBoot > 0) {	
-				
-					up1 = setup("/player/playerBootsBack1");
-					up2 = setup("/player/playerBootsBack2");
-					down1 = setup("/player/playerBootsFront1");
-					down2 = setup("/player/playerBootsFront2");
-					right1 = setup("/player/playerBootsRight1");
-					right2 = setup("/player/playerBootsRight2");
-					left1 = setup("/player/playerBootsLeft1");
-					left2 = setup("/player/playerBootsLeft2");
-			}
-				ArmorCheck();
 				break;
 			
-			case "Night Armor":
-				gp.playSE(5);
+			case "cL3":
+				gp.playSE(1);
 				gp.obj[i] = null;
-				hasArmor = 1;
-				if(hasArmor > 0) {
-					up1 = setup("/player/playerArmorBack1");
-					up2 = setup("/player/playerArmorBack2");
-					down1 = setup("/player/playerArmorFront1");
-					down2 = setup("/player/playerArmorFront2");
-					right1 = setup("/player/playerArmorRight1");
-					right2 = setup("/player/playerArmorRight2");
-					left1 = setup("/player/playerArmorLeft1");
-					left2 = setup("/player/playerArmorLeft2");
-				}
+				gp.showWord[2] = gp.cL3;
+				gp.gameEnd++;
 				
-				ArmorCheck();
 				break;
-			case "Night Hood":
-				gp.playSE(5);
+			case "cL4":
+				gp.playSE(1);
+				
+					gp.obj[i] = null;
+					gp.showWord[3] = gp.cL4;
+					gp.gameEnd++;
+				
+				
+				break;
+			case "cL5":
+				gp.playSE(1);
 				gp.obj[i] = null;
-				hasHood = 1;
-				if(hasHood > 0) {
+				gp.gameEnd++;
+				gp.showWord[4] = gp.cL5;
 				
-					up1 = setup("/player/playerHoodBack1");
-					up2 = setup("/player/playerHoodBack2");
-					down1 = setup("/player/playerHoodFront1");
-					down2 = setup("/player/playerHoodFront2");
-					right1 = setup("/player/playerHoodRight1");
-					right2 = setup("/player/playerHoodRight2");
-					left1 = setup("/player/playerHoodLeft1");
-					left2 = setup("/player/playerHoodLeft2");
-				}
-				ArmorCheck();
 				break;
-			case "areaChecker31":
-				area = 3;
-				level = 1;
-				break;
-			case "areaChecker22":
-				area = 2;
-				level = 2;
-				break;
-			case "areaChecker42":
-				area = 4;
-				level = 2;
-				break;
-			case "areaChecker11":
-				area = 1;
-				level = 1;
-				break;
-			case "areaChecker51":
-				area = 5;
-				level = 1;
-				break;
-			case "areaChecker41":
-				area = 4;
-				level = 1;
-				break;
-			case "areaChecker21":
-				area = 2;
-				level = 1;
-				break;
+			
+			
 			}
 			
 		}
 		
 	}
 	
-	public void ArmorCheck() {
-		if(hasArmor > 0 && hasBoot > 0 && hasHood < 1) {
-			up1 = setup("/player/playerAbBack1");
-			up2 = setup("/player/playerAbBack2");
-			down1 = setup("/player/playerAbFront1png");
-			down2 = setup("/player/playerAbFront2");
-			right1 = setup("/player/playerAbRight1");
-			right2 = setup("/player/playerAbRight2");
-			left1 = setup("/player/playerAbLeft1");
-			left2 = setup("/player/playerAbLeft2");
-			System.out.println("armor check");
-			
-		}
-		else if(hasArmor > 0 && hasBoot > 0 && hasHood > 0) {
-			speed += 3;
-			up1 = setup("/player/playerFullBack1");
-			up2 = setup("/player/playerFullBack2");
-			down1 = setup("/player/playerFullFront1");
-			down2 = setup("/player/playerFullFront2");
-			right1 = setup("/player/playerFullRight1");
-			right2 = setup("/player/playerFullRight2");
-			left1 = setup("/player/playerFullLeft1");
-			left2 = setup("/player/playerFullLeft2");
-			System.out.println("armor check");
-			
-		}
-	}
+	
+	
 	
 	
 

@@ -14,7 +14,7 @@ public class CorrectLetter3 extends SuperObject {
 	  
 	this.gp = gp;
 	
-	name = "cL1";
+	name = "cL3";
 	
 	try {
 		image = ImageIO.read(getClass().getResourceAsStream("/objects/ALPHABET png/" + gp.cL3 +".png"));
@@ -23,7 +23,7 @@ public class CorrectLetter3 extends SuperObject {
 	}catch(IOException e) {
 		e.printStackTrace();
 		}
-		collision = true;
+		
 	
   }
 }

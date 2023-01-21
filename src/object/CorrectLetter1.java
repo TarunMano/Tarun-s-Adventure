@@ -23,7 +23,7 @@ public class CorrectLetter1 extends SuperObject {
 	}catch(IOException e) {
 		e.printStackTrace();
 		}
-		collision = true;
+	
 	
   }
 }

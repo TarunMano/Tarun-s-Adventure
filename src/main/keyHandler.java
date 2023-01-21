@@ -24,7 +24,7 @@ public class keyHandler implements KeyListener{
 			    	  gp.ui.numCommand--;
 			    	 
 		    		  if(gp.ui.numCommand < 0) {
-		    			  gp.ui.numCommand = 2;
+		    			  gp.ui.numCommand = 3;
 		    		  }
 			    	  
 		    	  }
@@ -32,7 +32,7 @@ public class keyHandler implements KeyListener{
 			    	  gp.playSE(7);
 			    	  gp.ui.numCommand++;
 			    
-			    	  if(gp.ui.numCommand > 2) {
+			    	  if(gp.ui.numCommand > 3) {
 		    			  gp.ui.numCommand = 0;
 		    		  }
 			    	  
@@ -47,6 +47,10 @@ public class keyHandler implements KeyListener{
 			    		  
 			    	  }
 			    	  if(gp.ui.numCommand == 2) {
+				    		gp.ui.titleState = 3;
+				    		  
+				    	  }
+			    	  if(gp.ui.numCommand == 3) {
 			    		  System.exit(0);
 			    		  
 			    	  }
@@ -78,6 +82,7 @@ public class keyHandler implements KeyListener{
 			    		  gp.playSE(7);
 			    		  gp.stopMusic();
 			    		  gp.playMusic(0);
+			    		  gp.difficulty = 0;
 			    		  gp.gameState = gp.playState;
 			    		 
 			    	  }
@@ -85,12 +90,14 @@ public class keyHandler implements KeyListener{
 			    		  gp.playSE(7);
 			    		  gp.stopMusic();
 			    		  gp.playMusic(0);
+			    		  gp.difficulty = 1;
 			    		  gp.gameState = gp.playState;
 			    		  
 			    	  }
 			    	  if(gp.ui.numCommand == 2) {
 			    		  gp.stopMusic();
 			    		  gp.playMusic(0);
+			    		  gp.difficulty = 2;
 			    		  gp.gameState = gp.playState;
 			    		  
 			    	  }
@@ -110,36 +117,47 @@ public class keyHandler implements KeyListener{
 	    			  gp.ui.numCommand = 0;
 	    		  }
 	    	  }
+	    	  else if(gp.ui.titleState == 3) {
+	    		  if(code == KeyEvent.VK_ENTER) {
+	    			  gp.playSE(7);
+	    			  gp.ui.titleState = 0;
+	    			  gp.ui.numCommand = 0;
+	    		  }
+	    	  }
 	    	 
 	      }
-	      if(code == KeyEvent.VK_W||code == KeyEvent.VK_UP){
-	    	  upPressed = true;
+	      if(gp.gameState == gp.playState||gp.gameState == gp.pauseState) {
+	    	   if(code == KeyEvent.VK_W||code == KeyEvent.VK_UP){
+	 	    	  upPressed = true;
 
+	 	      }
+	 	      if(code == KeyEvent.VK_A||code == KeyEvent.VK_LEFT){
+	 	    	  leftPressed = true;
+	 	        
+	 	      }
+	 	      if(code == KeyEvent.VK_S||code == KeyEvent.VK_DOWN){
+	 	    	  downPressed = true;
+	 	        
+	 	      }
+	 	      if(code == KeyEvent.VK_D|| code == KeyEvent.VK_RIGHT){
+	 	    	  rightPressed = true;
+	 	        
+	 	      }
+	 	      if(code == KeyEvent.VK_ESCAPE){
+	 	    	  gp.pauseCount += 1;
+	 	    	  if(gp.gameState == gp.playState) {
+	 	    		  gp.gameState = gp.pauseState;
+	 	    	  }
+	 	    	  else if(gp.gameState == gp.pauseState) {
+	 	    		  gp.gameState = gp.playState;
+	 	    		  gp.resumeCount -= 1;
+	 	    	
+	 	    		  
+	 	    	  }
+	 	        
+	 	      }
 	      }
-	      if(code == KeyEvent.VK_A||code == KeyEvent.VK_LEFT){
-	    	  leftPressed = true;
-	        
-	      }
-	      if(code == KeyEvent.VK_S||code == KeyEvent.VK_DOWN){
-	    	  downPressed = true;
-	        
-	      }
-	      if(code == KeyEvent.VK_D|| code == KeyEvent.VK_RIGHT){
-	    	  rightPressed = true;
-	        
-	      }
-	      if(code == KeyEvent.VK_ESCAPE){
-	    	  gp.pauseCount += 1;
-	    	  if(gp.gameState == gp.playState) {
-	    		  gp.gameState = gp.pauseState;
-	    	  }
-	    	  else if(gp.gameState == gp.pauseState) {
-	    		  gp.gameState = gp.playState;
-	    		  gp.resumeCount -= 1;
-	    		  
-	    	  }
-	        
-	      }
+	   
 	      //debug
 	      if(code == KeyEvent.VK_T) {
 	    	   if(checkDrawTime == false) {
